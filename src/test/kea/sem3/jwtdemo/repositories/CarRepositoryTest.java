@@ -18,8 +18,8 @@ class CarRepositoryTest {
 
     @BeforeEach
     public void setUp(@Autowired CarRepository carRepository){
-        carId1 = carRepository.save(new Car("Mazda", "MX-5 (Miata)", 1337)).getId();
-        carId2 = carRepository.save(new Car("Toyota", "Corolla", 500)).getId();
+        carId1 = carRepository.save(new Car("Mazda", "MX-5 (Miata)", 1337, 50)).getId();
+        carId2 = carRepository.save(new Car("Toyota", "Corolla", 500, 50)).getId();
     }
 
     @Test

@@ -70,4 +70,32 @@ public class Car {
     public LocalDateTime getDateEdited() {
         return dateEdited;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setPricePrDay(int pricePrDay) {
+        this.pricePrDay = pricePrDay;
+    }
+
+    public void setBestDiscount(double bestDiscount) {
+        this.bestDiscount = bestDiscount;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public void setDateEdited(LocalDateTime dateEdited) {
+        this.dateEdited = dateEdited;
+    }
 }

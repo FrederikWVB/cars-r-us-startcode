@@ -1,12 +1,10 @@
 package kea.sem3.jwtdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,20 +13,30 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    private LocalDateTime reservationDate;
-    private LocalDateTime rentalDate;
+    @ManyToOne
+    private Car reservedCar;
+
+    @ManyToOne
+    private Member reservedByMember;
 
     @CreationTimestamp
-    private LocalDateTime dateCreated;
+    private LocalDateTime reservationDate;
+
+    private LocalDateTime rentalDate;
+
     @UpdateTimestamp
     private LocalDateTime dateEdited;
 
     public Reservation() {
     }
 
-    public Reservation(LocalDateTime reservationDate, LocalDateTime rentalDate) {
-        this.reservationDate = reservationDate;
+    //TODO: reservation constructor need fixing
+    public Reservation(LocalDateTime rentalDate, Member reservedByMember, Car reservedCar) {
         this.rentalDate = rentalDate;
+        this.reservedByMember = reservedByMember;
+        this.reservedCar = reservedCar;
+        //reservedCar.addReservation(this);
+        //reservedByMember.addReservation(this);
     }
 
     public int getId() {
@@ -41,5 +49,13 @@ public class Reservation {
 
     public LocalDateTime getRentalDate() {
         return rentalDate;
+    }
+
+    public Car getReservedCar() {
+        return reservedCar;
+    }
+
+    public Member getReservedByMember() {
+        return reservedByMember;
     }
 }

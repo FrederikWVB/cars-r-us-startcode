@@ -1,6 +1,12 @@
 package kea.sem3.jwtdemo.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("MEMBER")
@@ -16,10 +22,14 @@ public class Member extends BaseUser{
     private String city;
     private String zip;
     private boolean approved;
-    private int ranking;
+    private byte ranking; //Value between 1 and 10
 
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
+    @UpdateTimestamp
+    private LocalDateTime dateEdited;
 
-    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, String zip, boolean approved, int ranking) {
+    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, String zip, boolean approved) {
         super(username, email, password);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,7 +37,15 @@ public class Member extends BaseUser{
         this.city = city;
         this.zip = zip;
         this.approved = approved;
-        this.ranking = ranking;
+        ranking = 5; //default value
+    }
+
+    //Problems related to trasactional, use EAGER
+    @OneToMany(mappedBy = "reservedByMember", fetch = FetchType.EAGER)
+    private Set<Reservation> reservations = new HashSet<>();
+
+    public void addReservation (Reservation res){
+        reservations.add(res);
     }
 
     public Member() {
@@ -81,11 +99,27 @@ public class Member extends BaseUser{
         this.approved = approved;
     }
 
-    public int getRanking() {
+    public Byte getRanking() {
         return ranking;
     }
 
-    public void setRanking(int ranking) {
+    public void setRanking(Byte ranking) {
         this.ranking = ranking;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public LocalDateTime getDateEdited() {
+        return dateEdited;
+    }
+
+    public void setDateEdited(LocalDateTime dateEdited) {
+        this.dateEdited = dateEdited;
     }
 }

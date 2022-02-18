@@ -1,11 +1,14 @@
 package kea.sem3.jwtdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.sem3.jwtdemo.dto.CarRequest;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Car {
@@ -17,7 +20,7 @@ public class Car {
     private String brand;
     @Column(length = 40, nullable = false)
     private String model;
-    private int pricePrDay;
+    private double pricePrDay;
     private double bestDiscount;
 
     @CreationTimestamp
@@ -25,10 +28,14 @@ public class Car {
     @UpdateTimestamp
     private LocalDateTime dateEdited;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "reservedCar", fetch = FetchType.EAGER)
+    private Set<Reservation> reservations = new HashSet<>();
+
     public Car() {
     }
 
-    public Car(String brand, String model, int pricePrDay, double bestDiscount) {
+    public Car(String brand, String model, double pricePrDay, double bestDiscount) {
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
@@ -42,6 +49,9 @@ public class Car {
         this.bestDiscount = body.getBestDiscount();
     }
 
+    public void addReservation (Reservation res){
+        reservations.add(res);
+    }
 
     public int getId() {
         return id;
@@ -55,7 +65,7 @@ public class Car {
         return model;
     }
 
-    public int getPricePrDay() {
+    public double getPricePrDay() {
         return pricePrDay;
     }
 
@@ -83,7 +93,7 @@ public class Car {
         this.model = model;
     }
 
-    public void setPricePrDay(int pricePrDay) {
+    public void setPricePrDay(double pricePrDay) {
         this.pricePrDay = pricePrDay;
     }
 

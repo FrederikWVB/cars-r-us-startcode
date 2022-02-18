@@ -19,7 +19,7 @@ public class CarRequest {
     //private CarBrand brand;
     private String brand;
     private String model;
-    private int pricePrDay;
+    private double pricePrDay;
     private double bestDiscount;
 }
 

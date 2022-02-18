@@ -1,5 +1,7 @@
 package kea.sem3.jwtdemo.entity;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
+import kea.sem3.jwtdemo.dto.MemberRequest;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -40,6 +42,17 @@ public class Member extends BaseUser{
         ranking = 5; //default value
     }
 
+    public Member(MemberRequest body) {
+        super(body.getUsername(), body.getEmail(), body.getPassword());
+        this.firstName = body.getFirstName();
+        this.lastName = body.getLastName();
+        this.street = body.getStreet();
+        this.city = body.getCity();
+        this.zip = body.getZip();
+        this.approved = true;
+        this.ranking = 5;
+    }
+
     //Problems related to trasactional, use EAGER
     @OneToMany(mappedBy = "reservedByMember", fetch = FetchType.EAGER)
     private Set<Reservation> reservations = new HashSet<>();
@@ -49,6 +62,10 @@ public class Member extends BaseUser{
     }
 
     public Member() {
+    }
+
+    public String getUsername(){
+        return super.getUsername();
     }
 
     public String getFirstName() {

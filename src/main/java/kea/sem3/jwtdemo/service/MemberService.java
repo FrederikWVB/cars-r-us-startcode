@@ -31,14 +31,15 @@ public class MemberService {
         return new MemberResponse(member,false);
     }
 
-    /*
+
     public MemberResponse addMember(MemberRequest body) {
 
         if (memberRepository.existsById((body.getUsername()))) {
-            throw new Client4xxException("Provided user name is taken");
+            throw new Client4xxException("Username is taken");
         }
+
         if (memberRepository.emailExist(body.getEmail())) {
-            throw new Client4xxException("Provided email is taken");
+            throw new Client4xxException("Email is taken");
         }
         Member member = new Member(body);
         member.addRole(Role.USER);
@@ -46,7 +47,10 @@ public class MemberService {
         return new MemberResponse(member.getUsername(), member.getDateCreated(), member.getRoles());
     }
 
-    */
-
+    public void deleteMember(String username){
+        Member member = memberRepository.findById(username).orElseThrow(() -> new Client4xxException("User not found", HttpStatus.NOT_FOUND));
+        System.out.println("Member Deleted Username: " + member.getUsername());
+        memberRepository.deleteById(username);
+    }
 }
 

@@ -15,7 +15,7 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarRequest {
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     //private CarBrand brand;
     private String brand;
     private String model;

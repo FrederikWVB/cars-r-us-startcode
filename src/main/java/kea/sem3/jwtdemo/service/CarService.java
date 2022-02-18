@@ -46,7 +46,8 @@ public class CarService {
 
 
     public void deleteCar(int id) {
-        //return null;
+        carRepository.deleteById(id);
+        System.out.println("Car Deleted ID: " + id);
     }
 
 
